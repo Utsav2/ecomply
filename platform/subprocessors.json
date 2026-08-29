@@ -1,0 +1,5 @@
+[
+  {"name": "Stripe", "service": "payments", "attestation": "SOC 2 Type II (2026)", "covers_encryption_in_transit": false, "on_file": true},
+  {"name": "Datadog", "service": "observability", "attestation": "SOC 2 Type II (2026)", "covers_encryption_in_transit": true, "on_file": true},
+  {"name": "SendGrid", "service": "email", "attestation": "SOC 2 Type II (2025)", "covers_encryption_in_transit": true, "on_file": true}
+]

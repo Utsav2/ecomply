@@ -1,0 +1,9 @@
+{
+  "name": "noncompliant-web-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static frontend assets for NonCompliantWebApp",
+  "scripts": {
+    "lint": "echo 'no linter configured'"
+  }
+}

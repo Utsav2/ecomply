@@ -1,0 +1,7 @@
+{
+  "partner_inventory_ok": {
+    "items": [{ "sku": "WIDGET-1", "qty": 12 }],
+    "callback_url": "http://test-callback.example-corp.net/hook"
+  },
+  "payment_ok": { "status": "succeeded", "charge_id": "ch_test_123" }
+}

@@ -1,0 +1,25 @@
+.track {
+  position: relative;
+  height: 6px;
+  width: 100%;
+  background: var(--neutral-bg);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.dispositioned,
+.exceptions {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: var(--radius-pill);
+}
+
+.dispositioned {
+  background: var(--conforming-text);
+}
+
+.exceptions {
+  background: var(--exception-text);
+}

@@ -1,0 +1,45 @@
+.log {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  max-height: 360px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  padding: 12px 0;
+}
+
+.line {
+  display: flex;
+  gap: 16px;
+  padding: 0 16px;
+  animation: fadeIn 150ms ease both;
+  white-space: nowrap;
+}
+
+.ts {
+  color: var(--muted);
+  flex: none;
+}
+
+.msg {
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.empty {
+  padding: 0 16px;
+  color: var(--muted);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

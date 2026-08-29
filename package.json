@@ -1,21 +1,27 @@
 {
-  "name": "anth-take-home",
+  "name": "ecomply",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "record": "tsx scripts/record-run.ts",
+    "check": "tsx scripts/check-acceptance.ts"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.122.0",
+    "@upstash/redis": "^1.38.3",
     "next": "16.3.3",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "yaml": "^2.9.0"
   },
   "devDependencies": {
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "tsx": "^4.23.12",
     "typescript": "^5"
   }
 }

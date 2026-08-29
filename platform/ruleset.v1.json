@@ -1,0 +1,23 @@
+{
+  "ruleset_version": "v1",
+  "control": "CC6.7",
+  "description": "Egress-candidate enumeration for encryption-in-transit. Deliberately broad: matches are candidates, not findings. Precision is the enrichment layer's job, not this file's. False positives are cheap; false negatives are fatal.",
+  "network_packages": {
+    "comment": "Manifest layer: any file importing one of these enters the population. Packages not listed here whose names match the network-ish heuristic are flagged for manual review, never dropped.",
+    "python": ["requests", "httpx", "urllib3", "aiohttp", "stripe", "boto3", "websockets", "paramiko", "pika"],
+    "javascript": ["axios", "node-fetch", "got", "undici", "stripe", "ws", "superagent"],
+    "network_ish_heuristic": ["http", "net", "sock", "rpc", "grpc", "smtp", "ftp"]
+  },
+  "term_scan": {
+    "comment": "Substring match, case-insensitive, over EVERY file walked — including Dockerfiles, CI configs, shell scripts, .env.example. One candidate per matching line.",
+    "all_files": ["http://", "https://", "ws://", "wss://"],
+    "python": ["requests.", "urllib", "httpx", "aiohttp.", "socket.", "smtplib", "ssl.", "verify=", "create_connection", "getaddrinfo"],
+    "javascript": ["fetch(", "axios", "XMLHttpRequest", "new WebSocket", "http.request", "https.request", "net.connect"],
+    "shell_docker_config": ["curl", "wget", "nc ", "openssl s_client", "ADD http"]
+  },
+  "file_type_map": {
+    "python": [".py"],
+    "javascript": [".js", ".jsx", ".ts", ".tsx", ".mjs"],
+    "shell_docker_config": [".sh", "Dockerfile", ".yml", ".yaml", ".env", ".env.example", ".cfg", ".ini", ".toml"]
+  }
+}

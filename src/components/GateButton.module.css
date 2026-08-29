@@ -1,0 +1,27 @@
+.gate {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 16px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-control);
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition:
+    background-color 200ms ease,
+    border-color 200ms ease,
+    opacity 200ms ease;
+}
+
+.open:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.closed {
+  opacity: 0.55;
+  cursor: default;
+}

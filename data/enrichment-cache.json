@@ -1,0 +1,112 @@
+{
+  "Dockerfile:33e19f53629137c554d23c599e869b2513994ef81fc748eb53086d7a3abf1875": {
+    "disposition": "NOT_APPLICABLE",
+    "detail_code": "NOT_EGRESS",
+    "severity": null,
+    "reasoning": "The matched line is a Docker HEALTHCHECK hitting http://localhost:8080/health, which is a loopback call to the container's own process, not egress to an external server.",
+    "resolution_status": "AUTO_VALIDATED",
+    "review_reason": null,
+    "code_summary": "This line tells Docker to periodically check that the app inside the container is alive by calling its own local health endpoint.",
+    "transport_failure": false
+  },
+  "app/billing.py:22eef80e24ed91395893258456bc370276547540542bbfb6910ee0c3ce598f42": {
+    "disposition": "NOT_APPLICABLE",
+    "detail_code": "NOT_EGRESS",
+    "severity": null,
+    "reasoning": "This line only sets the Stripe API key from an environment variable; it is a configuration assignment, not a network call. The actual egress occurs at the stripe.Charge.create call site elsewhere in the file, which should be classified separately as delegated.",
+    "resolution_status": "AUTO_VALIDATED",
+    "review_reason": null,
+    "code_summary": "This line configures the Stripe SDK with an API key read from an environment variable; it does not itself make any network connection.",
+    "transport_failure": false
+  },
+  ".env.example:87c0ec6fb06cafec22b534528a6d574760f1e67587369496e037e776443050d8": {
+    "disposition": "NOT_APPLICABLE",
+    "detail_code": "NOT_EGRESS",
+    "severity": null,
+    "reasoning": "This is a line from .env.example, a template/example configuration file meant to be copied and filled with real values, not executed code performing egress. It documents a placeholder URL rather than making any actual connection.",
+    "resolution_status": "AUTO_VALIDATED",
+    "review_reason": null,
+    "code_summary": "This line shows an example environment variable for a webhook URL, intended as a template for developers to configure their own .env file.",
+    "transport_failure": false
+  },
+  "app/auth_client.py:45e5f01b4df528d8e1b13528ec63e43e133083770941e218489c26829a8cea30": {
+    "disposition": null,
+    "detail_code": null,
+    "severity": null,
+    "reasoning": "The request targets http://auth-internal:8080, a single-label internal hostname rather than a public FQDN, indicating traffic likely stays within an internal network rather than crossing an external trust boundary. Whether this constitutes production egress requiring TLS is not statically determinable from this snippet.",
+    "resolution_status": "NEEDS_REVIEW",
+    "review_reason": "internal-network egress; whether production traffic crosses a trust boundary is not statically determinable — candidate for scope decision",
+    "code_summary": "This function calls an internal authentication service over plain HTTP to verify whether a session token is valid.",
+    "transport_failure": false
+  },
+  "app/billing.py:80a8ce49abdf85eeffa22348619f1e5e8ce0d5df7c71b1ba6a32cf7e28363a37": {
+    "disposition": "EXCEPTION",
+    "detail_code": "DELEGATED_TO_SUBPROCESSOR",
+    "severity": "MEDIUM",
+    "reasoning": "This is a direct SDK call to stripe.Charge.create(), which uses Stripe's official client library to handle the network transport. TLS enforcement for this connection is controlled by Stripe's SDK, not by this application code. repo declares delegation to Stripe; Stripe attestation on file (SOC 2 Type II (2026)) does not cover encryption in transit.",
+    "resolution_status": "AUTO_VALIDATED",
+    "review_reason": null,
+    "code_summary": "This code charges a customer's payment token via the Stripe payment processing API.",
+    "transport_failure": false
+  },
+  "app/main.py:c4edaac2d0d72d7849a3d6213469fc43750fd401396e0074f6fa62daf48b3c14": {
+    "disposition": "CONFORMING",
+    "detail_code": "TLS_ENFORCED",
+    "severity": null,
+    "reasoning": "The code makes an outbound HTTPS request to an external host (api.exchangerate.host) using the requests library with no verify=False or other TLS-disabling parameter, so certificate verification remains enabled by default.",
+    "resolution_status": "AUTO_VALIDATED",
+    "review_reason": null,
+    "code_summary": "This endpoint fetches current foreign exchange rates from an external API to display in a pricing widget.",
+    "transport_failure": false
+  },
+  "app/sync.py:91b12f24704af4e5e9dbd32f73991f3d375e6945bbf327eae8cf4933cb63d0b7": {
+    "disposition": "EXCEPTION",
+    "detail_code": "TLS_DISABLED_EXPLICITLY",
+    "severity": "HIGH",
+    "reasoning": "The request uses https:// but explicitly sets verify=False, disabling certificate verification and negating the protection TLS would otherwise provide against MITM attacks.",
+    "resolution_status": "AUTO_VALIDATED",
+    "review_reason": null,
+    "code_summary": "This function fetches inventory data from an external partner API, but it turns off certificate checking, so the encrypted connection cannot be trusted to be talking to the genuine server.",
+    "transport_failure": false
+  },
+  "app/webhooks.py:69f5af899ca95c73a6559c56aaf3f1837d0d2883e0625483415dd6d09176abb2": {
+    "disposition": null,
+    "detail_code": null,
+    "severity": null,
+    "reasoning": "The egress target is read from the environment variable PAYMENT_WEBHOOK_URL, so the URL scheme (http vs https) cannot be statically determined from this code. No TLS verification is disabled, but we cannot confirm the connection is actually TLS-protected without knowing the runtime value of the variable.",
+    "resolution_status": "NEEDS_REVIEW",
+    "review_reason": "egress target determined by environment variable; scheme not verifiable statically",
+    "code_summary": "This function sends an HTTP GET request to a partner webhook URL that is configured via an environment variable at deployment time, to notify them that a payment order was processed.",
+    "transport_failure": false
+  },
+  "deploy.sh:970b10c56dfabc54965a07c366620fa3aeaef5fbf0b770466b02e83ea7802b5d": {
+    "disposition": "CONFORMING",
+    "detail_code": "TLS_ENFORCED",
+    "severity": null,
+    "reasoning": "The curl command posts to an external HTTPS endpoint (deploys.example-corp.net) with no flags disabling certificate verification (no -k/--insecure), so TLS is enforced with default certificate validation.",
+    "resolution_status": "AUTO_VALIDATED",
+    "review_reason": null,
+    "code_summary": "This deploy script notifies a deploy-tracking service over HTTPS after building and pushing a Docker image.",
+    "transport_failure": false
+  },
+  "Dockerfile:d43cb3fbf664de87d13ed4ea8f531ccf6f4904a27bf1004c32f9337092c64186": {
+    "disposition": "EXCEPTION",
+    "detail_code": "TLS_NOT_ENFORCED",
+    "severity": "MEDIUM",
+    "reasoning": "The Dockerfile RUN command fetches and executes an install script from an external FQDN (get.legacy-tools.example-corp.net) over plain http://, with no certificate verification possible since TLS is not used at all. This is a live egress call executed during the image build, fetching remote content that is piped directly into a shell, making it a genuine plaintext external connection.",
+    "resolution_status": "AUTO_VALIDATED",
+    "review_reason": null,
+    "code_summary": "This Dockerfile step downloads a shell script from a company tooling server over an unencrypted HTTP connection and immediately runs it.",
+    "transport_failure": false
+  },
+  "static/js/checkout.js:9b70cbf584e8e60b961bd81a2ae2621523128738f8b24284d8ec3a598a9a67da": {
+    "disposition": "EXCEPTION",
+    "detail_code": "TLS_NOT_ENFORCED",
+    "severity": "MEDIUM",
+    "reasoning": "The code makes an explicit fetch() call over plain http:// to a fully-qualified external hostname (cdn.legacy-assets.example-corp.net), not localhost or an internal single-label host. This is a live egress call, not a template/example, so plaintext transport to an external server applies.",
+    "resolution_status": "AUTO_VALIDATED",
+    "review_reason": null,
+    "code_summary": "This function loads price data for the checkout page by fetching a JSON file from a CDN host over an unencrypted HTTP connection.",
+    "transport_failure": false
+  }
+}

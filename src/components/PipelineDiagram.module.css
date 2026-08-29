@@ -1,0 +1,144 @@
+.diagram {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  margin-top: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.node {
+  flex: 1 1 0;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 12px 14px;
+  overflow: hidden;
+}
+
+.nodeWide {
+  flex: 1.35 1 0;
+  min-width: 176px;
+}
+
+.nodeTitle {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.nodeSub {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.nodeBody {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nodeLabel {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+.nodeLabel:first-child {
+  margin-top: 0;
+}
+
+.mono {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11.5px;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.pkgRow {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-bottom: 4px;
+}
+
+.pkgLink {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--interactive);
+}
+
+.pkgLink:hover {
+  text-decoration: underline;
+}
+
+.pkgMeta {
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.outcome {
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11.5px;
+  color: var(--ink);
+}
+
+.exception {
+  color: var(--exception-text);
+}
+
+.conforming {
+  color: var(--conforming-text);
+}
+
+.review {
+  color: var(--review-text);
+}
+
+.arrow {
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: var(--muted);
+  flex: 0 0 52px;
+  font-size: 13px;
+}
+
+.arrowLabel {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  max-width: 64px;
+  text-align: center;
+  line-height: 1.3;
+}
+
+@media (max-width: 860px) {
+  .diagram {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+  .arrow {
+    transform: rotate(90deg);
+    padding: 6px 0;
+  }
+  .arrowLabel {
+    transform: rotate(-90deg);
+    display: none;
+  }
+  .arrow span[aria-hidden] {
+    transform: none;
+  }
+}

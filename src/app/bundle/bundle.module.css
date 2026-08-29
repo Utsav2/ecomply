@@ -1,0 +1,633 @@
+/* Evidence bundle — light, print-native.
+   Self-contained; no imports from other app pages. */
+
+/* ---------- shared font stacks ---------- */
+
+.doc,
+.locked {
+  --sans: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif);
+  --mono: var(--font-mono, ui-monospace, SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace);
+  --display: var(--font-sans, -apple-system, sans-serif);
+}
+
+/* ---------- LOCKED (light, matches the instrument) ---------- */
+
+.locked {
+  flex: 1;
+  min-height: 100vh;
+  background: #f7f5fc;
+  color: #181822;
+  font-family: var(--sans);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+}
+
+.lockedInner {
+  width: 100%;
+  max-width: 560px;
+  background: #ffffff;
+  border: 1px solid #e4e2ee;
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+  padding: 32px;
+}
+
+.lockedEyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: #6d6e87;
+  margin-bottom: 20px;
+}
+
+.lockedHeadline {
+  font-family: var(--display);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: #283044;
+  margin-bottom: 12px;
+}
+
+.lockedSub {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #6d6e87;
+  margin-bottom: 28px;
+}
+
+.blockerList {
+  list-style: none;
+  border-top: 1px solid #e4e2ee;
+  margin-bottom: 28px;
+}
+
+.blockerRow {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  padding: 10px 0;
+  border-bottom: 1px solid #e4e2ee;
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.blockerId {
+  color: #b54708;
+  background: #fffaeb;
+  border-radius: 999px;
+  padding: 2px 8px;
+  line-height: 16px;
+  white-space: nowrap;
+}
+
+.blockerReason {
+  color: #6d6e87;
+}
+
+.lockedEmpty {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: #6d6e87;
+  border-top: 1px solid #e4e2ee;
+  border-bottom: 1px solid #e4e2ee;
+  padding: 14px 0;
+  margin-bottom: 28px;
+}
+
+.lockedLink {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: #4f7b99;
+  text-underline-offset: 3px;
+}
+
+.lockedLink:hover {
+  color: #3e6e8e;
+  text-decoration: underline;
+}
+
+/* ---------- DOCUMENT (light, paper) ---------- */
+
+.doc {
+  flex: 1;
+  min-height: 100vh;
+  background: #fafaf8;
+  color: #14171f;
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 56px 32px 96px;
+  position: relative;
+}
+
+.printButton {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: #6b7280;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 4px;
+}
+
+.printButton:hover {
+  color: #14171f;
+}
+
+/* header */
+
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  color: #6b7280;
+  margin-bottom: 14px;
+}
+
+.title {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: #14171f;
+  margin-bottom: 14px;
+}
+
+.runLine {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: #6b7280;
+  line-height: 1.7;
+  word-break: break-word;
+}
+
+.runLine span {
+  color: #14171f;
+}
+
+/* sections */
+
+.section {
+  margin-top: 56px;
+  border-top: 1px solid #e4e2ee;
+  padding-top: 24px;
+}
+
+.sectionEyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: #6b7280;
+  margin-bottom: 18px;
+}
+
+/* coverage claim */
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px 24px;
+  margin-bottom: 26px;
+}
+
+.statNum {
+  font-family: var(--mono);
+  font-size: 52px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #14171f;
+}
+
+.statCap {
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 8px;
+  line-height: 1.4;
+}
+
+.claim {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #14171f;
+  border-top: 1px solid #e4e2ee;
+  padding-top: 18px;
+}
+
+.claim code {
+  font-family: var(--mono);
+  font-size: 13px;
+}
+
+/* findings groups */
+
+.group {
+  margin-top: 34px;
+}
+
+.group:first-of-type {
+  margin-top: 0;
+}
+
+.groupHead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.groupEyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  font-weight: 600;
+}
+
+.groupEyebrowException {
+  color: #b42318;
+}
+
+.groupEyebrowConforming {
+  color: #067647;
+}
+
+.groupEyebrowNeutral {
+  color: #14171f;
+}
+
+.groupCount {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.findingList {
+  border-top: 1px solid #e4e2ee;
+}
+
+.findingRow {
+  border-bottom: 1px solid #e4e2ee;
+  padding: 12px 0 14px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.findingTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.findingLoc {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: #14171f;
+}
+
+.chip {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  padding: 1px 7px 2px;
+  border: 1px solid currentColor;
+  border-radius: 3px;
+  background: none;
+}
+
+.chipNeutral {
+  color: #6b7280;
+}
+
+.chipException {
+  color: #b42318;
+}
+
+.findingReasoning {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #6b7280;
+  margin-top: 7px;
+  max-width: 72ch;
+}
+
+.findingNote {
+  margin-top: 7px;
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #14171f;
+  border-left: 2px solid #e4e2ee;
+  padding-left: 12px;
+}
+
+.microLabel {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: #6b7280;
+  margin-right: 8px;
+}
+
+/* collapsed groups */
+
+.collapse {
+  border-top: 1px solid #e4e2ee;
+  border-bottom: 1px solid #e4e2ee;
+}
+
+.collapseSummary {
+  cursor: pointer;
+  padding: 12px 0;
+  font-size: 13px;
+  color: #6b7280;
+  list-style-position: outside;
+}
+
+.collapseSummary::marker {
+  color: #6b7280;
+  font-size: 11px;
+}
+
+/* scope ledger */
+
+.ledgerBlockLabel {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  color: #6b7280;
+  margin: 20px 0 8px;
+}
+
+.ledgerBlockLabel:first-of-type {
+  margin-top: 0;
+}
+
+.ledgerRow {
+  border-bottom: 1px solid #e4e2ee;
+  padding: 11px 0 13px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.ledgerList {
+  border-top: 1px solid #e4e2ee;
+}
+
+.ledgerTop {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: #14171f;
+}
+
+.ledgerMeta {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #6b7280;
+}
+
+.ledgerRationale {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #6b7280;
+  margin-top: 6px;
+  max-width: 72ch;
+}
+
+.flagMarker {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  color: #b42318;
+  margin-top: 7px;
+}
+
+.pushback {
+  font-size: 12.5px;
+  line-height: 1.6;
+  color: #14171f;
+  border-left: 2px solid #b42318;
+  padding-left: 12px;
+  margin-top: 6px;
+  max-width: 72ch;
+}
+
+/* subprocessors */
+
+.subTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.subTable th {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  font-weight: 500;
+  color: #6b7280;
+  text-align: left;
+  padding: 6px 14px 6px 0;
+  border-bottom: 1px solid #e4e2ee;
+}
+
+.subTable td {
+  padding: 9px 14px 9px 0;
+  border-bottom: 1px solid #e4e2ee;
+  vertical-align: baseline;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.subMono {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+.subMuted {
+  color: #6b7280;
+}
+
+.subExceptionNote {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #14171f;
+  border-left: 2px solid #b42318;
+  padding-left: 12px;
+  margin-top: 14px;
+  max-width: 72ch;
+}
+
+.subExceptionNote code {
+  font-family: var(--mono);
+  font-size: 12px;
+}
+
+/* methodology */
+
+.methList {
+  border-top: 1px solid #e4e2ee;
+}
+
+.methRow {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  padding: 9px 0;
+  border-bottom: 1px solid #e4e2ee;
+}
+
+.methKey {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: #6b7280;
+  padding-top: 2px;
+}
+
+.methVal {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: #14171f;
+  word-break: break-all;
+}
+
+.methProse {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: #14171f;
+  margin-top: 18px;
+}
+
+/* appendix */
+
+.jsonlBlock {
+  border: 1px solid #e4e2ee;
+  background: #ffffff;
+  padding: 14px 16px;
+  overflow-x: auto;
+}
+
+.jsonl {
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1.6;
+  color: #14171f;
+  white-space: pre;
+}
+
+/* footer */
+
+.docFooter {
+  margin-top: 56px;
+  border-top: 1px solid #e4e2ee;
+  padding-top: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #6b7280;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 640px) {
+  .statGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .statNum {
+    font-size: 40px;
+  }
+  .methRow {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}
+
+/* ---------- print ---------- */
+
+@page {
+  margin: 18mm;
+}
+
+@media print {
+  .doc {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  .page {
+    max-width: none;
+    padding: 0;
+  }
+
+  .printButton {
+    display: none;
+  }
+
+  .doc details {
+    display: block;
+  }
+
+  .doc details > * {
+    display: block;
+  }
+
+  .collapseSummary {
+    list-style: none;
+    cursor: default;
+  }
+
+  .collapseSummary::marker {
+    content: "";
+  }
+
+  .collapseSummary::-webkit-details-marker {
+    display: none;
+  }
+
+  .findingRow,
+  .ledgerRow,
+  .methRow,
+  .subTable tr {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+
+  .section {
+    margin-top: 36px;
+  }
+
+  .jsonlBlock {
+    overflow-x: visible;
+    border-color: #cccccc;
+  }
+
+  .jsonl {
+    font-size: 8px;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+}

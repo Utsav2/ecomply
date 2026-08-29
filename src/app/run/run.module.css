@@ -1,0 +1,204 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- header --- */
+
+.headerRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.headerText {
+  min-width: 0;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink-deep);
+}
+
+.controlLanguage {
+  margin-top: 12px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 65ch;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 14px;
+  flex: none;
+  padding-top: 4px;
+}
+
+.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.liveDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--interactive);
+}
+
+.rerunButton {
+  height: 34px;
+  padding: 0 14px;
+  white-space: nowrap;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-control);
+  transition: background-color 150ms ease;
+}
+
+.rerunButton:not(:disabled):hover {
+  background: var(--surface-muted);
+}
+
+.rerunButton:disabled {
+  cursor: default;
+  opacity: 0.55;
+}
+
+/* --- minimal streaming progress --- */
+
+.enrichProgress {
+  margin-top: 28px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 12px;
+  color: var(--interactive);
+}
+
+.section {
+  margin-top: 40px;
+}
+
+/* --- AI summary --- */
+
+.summaryCard {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  box-shadow: var(--shadow-card);
+  padding: 20px;
+}
+
+.summaryText {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink);
+  max-width: 72ch;
+}
+
+.summaryLoading {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+/* --- charts --- */
+
+.chartRow {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+}
+
+/* --- tabbed section --- */
+
+.tabBar {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+}
+
+.tab,
+.tabActive {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 2px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--muted);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  border-radius: 0;
+  white-space: nowrap;
+  flex: none;
+  transition:
+    color 150ms ease,
+    border-color 150ms ease;
+}
+
+.tab:hover {
+  color: var(--ink);
+}
+
+.tabActive {
+  color: var(--ink);
+  border-bottom-color: var(--accent);
+}
+
+.tabCount {
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 16px;
+  padding: 1px 7px;
+  border-radius: var(--radius-pill);
+  color: var(--review-text);
+  background: var(--review-bg);
+}
+
+.tabPanel {
+  margin-top: 20px;
+}
+
+.tabEmpty {
+  padding: 24px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.queue {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+@media (max-width: 720px) {
+  .chartRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .headerRow {
+    flex-direction: column;
+  }
+}

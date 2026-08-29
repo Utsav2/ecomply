@@ -1,0 +1,12 @@
+version: 1
+scope:
+  exclusions:
+    - path: "vendor/**"
+      rationale: "Third-party code; covered by dependency review"
+    - path: "tests/fixtures/**"
+      rationale: "Test fixtures; no production egress"
+    - path: "tools/internal-cli/**"
+      rationale: "Internal-only tooling; no external network path in production"
+subprocessors:
+  - name: Stripe
+    service: payments
