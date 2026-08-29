@@ -134,8 +134,10 @@ declare global {
 
 export function getStore(): EventStore {
   if (!globalThis.__harnessStore) {
-    const url = process.env.UPSTASH_REDIS_REST_URL;
-    const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+    // Accept both Upstash-native and Vercel-KV names for the same REST API.
+    const url = process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL;
+    const token =
+      process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN;
     globalThis.__harnessStore =
       url && token
         ? new UpstashStore(new Redis({ url, token }))

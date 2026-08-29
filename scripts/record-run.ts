@@ -26,12 +26,12 @@ import { DATA_DIR, PREBAKED_RUN_PATH } from "../src/lib/paths";
 import { getStore } from "../src/lib/store";
 
 async function main() {
-  if (process.env.UPSTASH_REDIS_REST_URL) {
-    console.error(
-      "Refusing to record against Upstash; unset UPSTASH_REDIS_REST_URL to use the memory store.",
-    );
-    process.exit(1);
-  }
+  // Recording is always local: never write a recording session into the
+  // shared Redis a deployment is serving from.
+  delete process.env.UPSTASH_REDIS_REST_URL;
+  delete process.env.UPSTASH_REDIS_REST_TOKEN;
+  delete process.env.KV_REST_API_URL;
+  delete process.env.KV_REST_API_TOKEN;
   if (!process.env.ANTHROPIC_API_KEY) {
     console.warn(
       "WARNING: no ANTHROPIC_API_KEY — cache misses will be recorded as NEEDS_REVIEW\n" +
