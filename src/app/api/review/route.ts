@@ -28,10 +28,12 @@ function bad(status: number, error: string): Response {
   return Response.json({ ok: false, error }, { status });
 }
 
-// Appends the decision events plus the gate they produce in ONE append, and
-// revalidates against a fresh fold immediately before — so a concurrent
-// re-run (stream reset) or duplicate review turns into a 409, never a
-// fabricated record in the wrong run.
+// Appends the decision events plus the gate they produce in ONE append, after
+// revalidating against a fresh fold — which narrows the window for a
+// concurrent re-run (stream reset) or duplicate review to milliseconds, but
+// is not a true compare-and-swap: the fold and the append are separate store
+// calls. Production would want an atomic conditional append keyed on a
+// run/finding revision.
 async function commitDecision(
   run_id: string | null,
   finding_id: string,

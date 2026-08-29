@@ -14,7 +14,7 @@ import type { Disposition } from "@/lib/types";
 import styles from "./run.module.css";
 
 const CONTROL_LANGUAGE =
-  "SOC 2 CC6.7 requires that data transmitted to and from the system is protected during transmission. This run tests one dimension of that requirement: does every outbound connection this repository makes use TLS? The deterministic scan enumerates every egress point — application code, containers, deploy scripts, configuration — and each candidate is then assessed and given a result with written reasoning.";
+  "SOC 2 CC6.7 requires that data transmitted to and from the system is protected during transmission. This run tests one dimension of that requirement: does every outbound connection this repository makes use TLS? A deterministic scan walks every file — application code, containers, deploy scripts, configuration — and surfaces every candidate its versioned, inspectable ruleset can find; each candidate is then assessed and given a result with written reasoning. Recall is a ruleset-engineering problem, not an unobservable model behavior.";
 
 // CVD-validated categorical palette — the legend, not color, carries identity.
 const RESULT_SLICES: { label: string; dispositions: Disposition[]; color: string }[] = [
@@ -178,6 +178,21 @@ export default function RunPage() {
       </section>
 
       <section className={styles.section}>
+        <Eyebrow>Accounting</Eyebrow>
+        <p className={styles.accounting}>
+          {findings.length} candidates ={" "}
+          {[
+            [resultSlices[0].count, "conforming"],
+            [resultSlices[1].count, "delegated"],
+            [resultSlices[2].count, "exceptions"],
+            [resultSlices[3].count, "out of scope"],
+            [resultSlices[4].count, "not applicable"],
+            [reviewSlices[2].count, "unresolved"],
+          ]
+            .filter(([n]) => (n as number) > 0)
+            .map(([n, label]) => `${n} ${label}`)
+            .join(" + ")}
+        </p>
         <div className={styles.chartRow}>
           <DonutChart
             title="Findings by result"

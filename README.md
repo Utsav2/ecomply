@@ -11,10 +11,14 @@ pressure. Audit evidence requires provable completeness: a known population, a
 result for every item, recorded exceptions. This inverts the default —
 **comprehensiveness > latency** — via a three-party division of labor:
 
-- **Determinism owns the denominator.** The scan layer enumerates everything,
-  accounts for every file, and freezes the population before judgment begins.
-  The term list is deliberately dumb and broad: false positives are cheap,
-  false negatives are fatal.
+- **Determinism owns the denominator.** The scan layer walks every file,
+  accounts for each one, and freezes the candidate population before judgment
+  begins. The population is complete relative to a versioned, inspectable
+  collection methodology — not a proof that no egress can exist outside it.
+  That trade is the point: recall becomes a ruleset-engineering problem with
+  auditable blind spots, instead of an unobservable model behavior. The term
+  list is deliberately dumb and broad: false positives are cheap, false
+  negatives are fatal.
 - **Claude owns semantic judgment.** The enrichment layer researches each
   candidate for precision and assesses it with written reasoning — or
   declines to decide, on the record.
@@ -26,6 +30,9 @@ result for every item, recorded exceptions. This inverts the default —
 The event log is the run log, and the run log is the evidence: the UI is a
 fold over an append-only stream, the same JSONL ships as the bundle's
 machine-readable appendix, and no mutation event exists in the schema.
+Append-only holds within a run — resolutions supersede earlier judgments
+rather than editing them. A re-run replaces the active stream (single global
+run state); immutable multi-run history keyed by run_id is future work.
 
 ## Running it
 

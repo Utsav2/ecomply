@@ -202,3 +202,10 @@
     flex-direction: column;
   }
 }
+
+.accounting {
+  margin-top: 10px;
+  font-family: var(--font-mono), ui-monospace, monospace;
+  font-size: 13px;
+  color: var(--ink);
+}
