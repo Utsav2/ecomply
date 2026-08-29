@@ -36,10 +36,10 @@ export default function Home() {
         <section className={styles.pitchCol}>
           <p className={styles.pitchLead}>ecomply lets you</p>
           <ol className={styles.pitchList}>
-            <li>Continuously monitor control coverage</li>
-            <li>Ask audit questions</li>
-            <li>Generate evidence bundles</li>
-            <li>Improve your control posture</li>
+            <li>Lock a reproducible audit population for a control</li>
+            <li>Triage every candidate with written reasoning</li>
+            <li>Resolve the ambiguous ones with accountable judgment</li>
+            <li>Export evidence only when everything is accounted for</li>
           </ol>
         </section>
       </div>
